@@ -1,9 +1,8 @@
-# Python读取kafka
 
 ## 前记
 `消息队列`是分布式系统架构中不可或缺的基础组件，它主要负责服务间的消息通信和数据传输。
 市面上有很多的开源消息队列服务可以选择，除了kafka，还有Activemq，Rocketmq等。
-对于要选择哪一个服务需要根据的实际情况来定，今天主要介绍Python对kafka的使用。
+对于要选择哪一个服务需要根据的实际情况来定，今天主要介绍kafka。
 
 ![消息队列示意图](https://github.com/five3/testqa/blob/master/images/kafka/kafka_01.png?raw=true)
 
