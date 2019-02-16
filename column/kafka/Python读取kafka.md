@@ -83,7 +83,6 @@ kafka中默认会把同一个消息分发给所有的订阅组（Consumer Group�
 如果想要实现队列模式，则把所有的消费者存放在一个Consumer Group内，且该Topic只有这一个组有订阅。kafka不同消费模式的示意如下：
 
 ![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka/kafka_06.png?raw=true)
-
 ![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka/kafka_07.png?raw=true)
 
 ### 消费方式
