@@ -1,4 +1,6 @@
+
 #Python读取kafka
+
 
 ## 前记
 消息队列是分布式系统架构中不可或缺的基础组件，它主要负责服务间的消息通信和数据传输。
@@ -58,6 +60,7 @@ Consumer Group是消费者组，它的作用的限定一组消费者，同组内
 - 消费者管理更加灵活
 
 接着，在po一张分区和分组的关系图。
+
 ![kafka分区与分组](https://github.com/five3/testqa/blob/master/images/kafka_03.png?raw=true)
 
 从图中可以看到的关系如下：
@@ -72,14 +75,18 @@ Consumer Group是消费者组，它的作用的限定一组消费者，同组内
 ### 队列还是分发
 跟其它消息队列一样，kafka的消息模式也支持队列和分发订阅两种方式。
 队列模式也称生产消费者模式，特点是同一个消息同时只能被一个消费者消费。其逻辑结构可以简单的通过下面的示意图来说明。
+
 ![队列模式](https://github.com/five3/testqa/blob/master/images/kafka_04.png?raw=true)
 
 分发订阅模式的特点是同一个消息同时可以被所有的消费者消费。（类似于广播的形式）其逻辑结构的简单示意如下：
+
 ![分发订阅模式](https://github.com/five3/testqa/blob/master/images/kafka_05.png?raw=true)
 
 kafka中默认会把同一个消息分发给所有的消费者，即订阅模式。
 如果想要实现队列模式，则把所有的消费者存放在一个Consumer Group内，且该Topic只有这一个组有订阅。kafka不同消费模式的示意如下：
+
 ![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka_06.png?raw=true)
+
 ![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka_07.png?raw=true)
 
 ### 消费方式
