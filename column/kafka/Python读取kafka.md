@@ -1,6 +1,4 @@
-
-#Python读取kafka
-
+# Python读取kafka
 
 ## 前记
 消息队列是分布式系统架构中不可或缺的基础组件，它主要负责服务间的消息通信和数据传输。
@@ -47,8 +45,7 @@ partition是Topic下的子概念，一个Topic通常可以分为1或多个partit
 
 Consumer Group是消费者组，它的作用的限定一组消费者，同组内的消费者在消费时是一种互斥模式；即同一个组内只有一个消费者可以消费到某个特定的消息。
 
-
-###分区和分组
+### 分区和分组
 分区即一个Topic设置了多个partition（默认是1个），分区有如下的优势：
 - 支持分布式
 - 支持负载并发请求
@@ -96,9 +93,9 @@ kafka的消费方式有三种：
 - At least once（消息最少被消费一次）
 - Exactly once（消息刚好被消费一次）
 
-前两者所有版本的kafka都支持，可以通过是否自动提交offset来控制。默认kafka是会自动提交offset的，即属于第一种方式。
-如果设置为不自动提交offset则属于第二种方式。另外如果需要刚好一次的消费语义，则需要0.11以上的kafka版本。
-如果你的版本不是0.11之后的，则可以通过At least once配合下游应用的幂等机制来实现。
+前两者所有版本的kafka都支持，可以通过是否自动提交offset来控制。默认kafka是会自动提交offset的，即属于第一种方式。如果设置为不自动提交offset则属于第二种方式。
+
+另外如果需要刚好一次的消费语义，则需要0.11以上的kafka版本。如果你的版本不是0.11之后的，则可以通过At least once配合下游应用的幂等机制来实现。
 
 ## API
 [https://kafka-python.readthedocs.io/en/master/usage.html](https://kafka-python.readthedocs.io/en/master/usage.html)
