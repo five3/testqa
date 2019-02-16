@@ -37,12 +37,15 @@ kafka中有几个重要的概念：
 - Topic
 - partition
 - Consumer Group
+- offset
 
 `Topic`：定义一个消息分类，相关的生产者和消费者通过特定的Topic来进行联通。
 
 `partition`：Topic下的子概念，一个Topic通常可以分为1或多个partition，该Topic中的消息会分发到不同的partition中，也可以在代码中指定特定的partition。
 
 `Consumer Group`：消费者组，它的作用的限定一组消费者，同组内的消费者在消费时是一种互斥模式；即同一个组内只有一个消费者可以消费到某个特定的消息。
+
+`offset`：Topic中记录某条消息位置的偏移量信息，通常offset是消费者读取消息的依据。
 
 ### 分区和分组
 `分区`即一个Topic设置了多个partition（默认是1个），分区有如下的优势：
