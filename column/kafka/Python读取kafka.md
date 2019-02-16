@@ -5,7 +5,7 @@
 市面上有很多的开源消息队列服务可以选择，除了kafka，还有Activemq，Rocketmq等。
 对于要选择哪一个服务需要根据的实际情况来定，今天主要介绍Python对kafka的使用。
 
-![消息队列示意图](https://github.com/five3/testqa/blob/master/images/kafka_01.png?raw=true)
+![消息队列示意图](https://github.com/five3/testqa/blob/master/images/kafka/kafka_01.png?raw=true)
 
 ## kafka特性
 大多数消息队列服务的主要功能都是大同小异，都能完成基本的消息传输和保障机制，只是在具体的实现细节上会有所不同。
@@ -31,7 +31,7 @@ kafka之所以能高速写，是因为利用了磁盘的顺序写的特性。经
 高速读除了因为连续读取，操作系统会有预读的机制之外，还体现在它的文件结构的设计。kafka把消息按topic分类，topic又可以按分区读写，分区再按索引文件分割存取。
 这样当我们知道了topic、分区、offset之后，就可以通过O(1)的方式找到目标消息所在的位置。
 
-![kafka消息存储结构](https://github.com/five3/testqa/blob/master/images/kafka_02.png?raw=true)
+![kafka消息存储结构](https://github.com/five3/testqa/blob/master/images/kafka/kafka_02.png?raw=true)
 
 ### 概念介绍
 kafka中有几个重要的概念：
@@ -58,7 +58,7 @@ kafka中有几个重要的概念：
 
 接着，在po一张分区和分组的关系图。
 
-![kafka分区与分组](https://github.com/five3/testqa/blob/master/images/kafka_03.png?raw=true)
+![kafka分区与分组](https://github.com/five3/testqa/blob/master/images/kafka/kafka_03.png?raw=true)
 
 从图中可以看到的关系如下：
 - Topic下的消息会分发给所有的订阅组
@@ -73,18 +73,18 @@ kafka中有几个重要的概念：
 跟其它消息队列一样，kafka的消息模式也支持队列和分发订阅两种方式。
 队列模式也称生产消费者模式，特点是同一个消息同时只能被一个消费者消费。其逻辑结构可以简单的通过下面的示意图来说明。
 
-![队列模式](https://github.com/five3/testqa/blob/master/images/kafka_04.png?raw=true)
+![队列模式](https://github.com/five3/testqa/blob/master/images/kafka/kafka_04.png?raw=true)
 
 分发订阅模式的特点是同一个消息同时可以被所有的消费者消费。（类似于广播的形式）其逻辑结构的简单示意如下：
 
-![分发订阅模式](https://github.com/five3/testqa/blob/master/images/kafka_05.png?raw=true)
+![分发订阅模式](https://github.com/five3/testqa/blob/master/images/kafka/kafka_05.png?raw=true)
 
 kafka中默认会把同一个消息分发给所有的订阅组（Consumer Group），即分发订阅模式。
 如果想要实现队列模式，则把所有的消费者存放在一个Consumer Group内，且该Topic只有这一个组有订阅。kafka不同消费模式的示意如下：
 
-![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka_06.png?raw=true)
+![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka/kafka_06.png?raw=true)
 
-![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka_07.png?raw=true)
+![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka/kafka_07.png?raw=true)
 
 ### 消费方式
 消息的消费方式是很多初用者会忽略的，因为简单场景下选择任意一种都是可以正常工作的，而到了生成环境可能就会出问题了。
