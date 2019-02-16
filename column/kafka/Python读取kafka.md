@@ -1,7 +1,7 @@
 # Python读取kafka
 
 ## 前记
-消息队列是分布式系统架构中不可或缺的基础组件，它主要负责服务间的消息通信和数据传输。
+`消息队列`是分布式系统架构中不可或缺的基础组件，它主要负责服务间的消息通信和数据传输。
 市面上有很多的开源消息队列服务可以选择，除了kafka，还有Activemq，Rocketmq等。
 对于要选择哪一个服务需要根据的实际情况来定，今天主要介绍Python对kafka的使用。
 
@@ -39,20 +39,20 @@ kafka中有几个重要的概念：
 - partition
 - Consumer Group
 
-Topic就是定义一个消息分类，相关的生产者和消费者通过特定的Topic来进行联通。
+`Topic`：定义一个消息分类，相关的生产者和消费者通过特定的Topic来进行联通。
 
-partition是Topic下的子概念，一个Topic通常可以分为1或多个partition，该Topic中的消息会分发到不同的partition中，也可以在代码中指定特定的partition。
+`partition`：Topic下的子概念，一个Topic通常可以分为1或多个partition，该Topic中的消息会分发到不同的partition中，也可以在代码中指定特定的partition。
 
-Consumer Group是消费者组，它的作用的限定一组消费者，同组内的消费者在消费时是一种互斥模式；即同一个组内只有一个消费者可以消费到某个特定的消息。
+`Consumer Group`：消费者组，它的作用的限定一组消费者，同组内的消费者在消费时是一种互斥模式；即同一个组内只有一个消费者可以消费到某个特定的消息。
 
 ### 分区和分组
-分区即一个Topic设置了多个partition（默认是1个），分区有如下的优势：
+`分区`即一个Topic设置了多个partition（默认是1个），分区有如下的优势：
 - 支持分布式
 - 支持负载并发请求
 - 支持容灾备份
-- 支持保证分区内的消费顺序
+- 保证分区内的消费顺序
 
-分组即把相关联的消费者放在一个组内（kafka对每个消费者会分配一个默认分组，如果不指定的话），分组有如下优势：
+`分组`即把相关联的消费者放在一个组内（kafka对每个消费者会分配一个默认分组，如果不指定的话），分组有如下优势：
 - 组内多个消费者可以并发处理（提高消费效率的方式）
 - 消费者管理更加灵活
 
@@ -79,7 +79,7 @@ Consumer Group是消费者组，它的作用的限定一组消费者，同组内
 
 ![分发订阅模式](https://github.com/five3/testqa/blob/master/images/kafka_05.png?raw=true)
 
-kafka中默认会把同一个消息分发给所有的消费者，即订阅模式。
+kafka中默认会把同一个消息分发给所有的订阅组（Consumer Group），即分发订阅模式。
 如果想要实现队列模式，则把所有的消费者存放在一个Consumer Group内，且该Topic只有这一个组有订阅。kafka不同消费模式的示意如下：
 
 ![kafka消息模式](https://github.com/five3/testqa/blob/master/images/kafka_06.png?raw=true)
@@ -93,9 +93,11 @@ kafka的消费方式有三种：
 - At least once（消息最少被消费一次）
 - Exactly once（消息刚好被消费一次）
 
-前两者所有版本的kafka都支持，可以通过是否自动提交offset来控制。默认kafka是会自动提交offset的，即属于第一种方式。如果设置为不自动提交offset则属于第二种方式。
+前两者所有版本的kafka都支持，可以通过是否自动提交offset来控制。
+默认kafka是会自动提交offset的，即属于第一种方式。如果设置为手动提交offset则属于第二种方式。
 
-另外如果需要刚好一次的消费语义，则需要0.11以上的kafka版本。如果你的版本不是0.11之后的，则可以通过At least once配合下游应用的幂等机制来实现。
+另外如果需要刚好一次的消费语义，则需要0.11以上的kafka版本。
+如果你的版本不是0.11之后的，则可以通过At least once配合下游应用的幂等机制来实现。
 
 ## API
 [https://kafka-python.readthedocs.io/en/master/usage.html](https://kafka-python.readthedocs.io/en/master/usage.html)
