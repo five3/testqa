@@ -22,7 +22,7 @@ RPC的概念相信很多软件从业人员或多或少都接触过，从开发�
 - 选择一个RPC内容协议（如：json、xml、protobuf等）
 
 这是网络上的一张RPC架构组成图，正好包含了上述列举的几项内容。
-![]()
+![RPC](https://img-blog.csdnimg.cn/20190312182425864.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
 
 这张图中的`client`就是我们要开发的功能代码。如果我们想调用远程服务的话，可以直接编写类似本地方法的代码；如：
 ```bash
