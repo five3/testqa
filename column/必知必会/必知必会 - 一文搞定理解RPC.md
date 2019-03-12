@@ -84,3 +84,7 @@ RPC协议可以有很多种实现，只要通信双方约定好就行了。目�
 - RPC可以很方便支持服务治理，而HTTP则需要单独实现支持
 
 简而言之，就是RPC在远程调用的场景下，比HTTP更高效，更简洁、附加特性更强大，更适合分布式和微服务的场景。
+
+
+获取更多感兴趣的文章，请扫描如下二维码！
+![关注二维码](https://img-blog.csdnimg.cn/20190117103222240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
