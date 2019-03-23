@@ -260,6 +260,11 @@ Logger2.info('this is info')
 # 总结
 到这里关于Python的logging模块的介绍就结束了。现在回过头来再总结下，logging模块其实有很多的子模块，
 不同的子模块有不同的作用，具体而言可以通过一张图来理解。
+
 ![logging](https://github.com/five3/testqa/blob/master/images/logging.png?raw=true)
+
 从图中可以看出logging模块的主要子模块有：Logger，Handler，Filter, Formatter等。
 其中Logger下面调用Handler，Handler下面调用Filter和Formatter来进行日志处理。
+
+获取更多关于Python和自动化测试的文章，请扫描如下二维码！
+![关注二维码](https://img-blog.csdnimg.cn/20190117103222240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
