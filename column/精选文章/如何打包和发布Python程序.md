@@ -117,6 +117,7 @@ twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 pip install --index-url https://test.pypi.org/simple/ PyTestReport
 ```
 > 你也可以直接通过[https://test.pypi.org/manage/projects/](https://test.pypi.org/manage/projects/)来查看你已经上传的项目，并通过点击[View]来查看项目的具体信息。
+![PYPI Projects](https://github.com/five3/testqa/blob/master/images/pypi_001.png?raw=true)
 
 安装完成之后，则需要测试下安装包是否能正常的工作，指定的入口脚本是否安装并正常使用，如果一切正常那么恭喜你了发布到正式的PYPI服务了！
 
@@ -131,11 +132,12 @@ twine upload dist/*
 pip install PyTestReport
 ```
 同样的，你也可以通过[https://pypi.org/manage/projects/](https://pypi.org/manage/projects/)来查看和管理已上传的项目。
+![PYPI Projects](https://github.com/five3/testqa/blob/master/images/pypi_001.png?raw=true)
 
 ## 附录
-[https://packaging.python.org/tutorials/packaging-projects/](https://packaging.python.org/tutorials/packaging-projects/)
-[http://blog.konghy.cn/2018/04/29/setup-dot-py/](http://blog.konghy.cn/2018/04/29/setup-dot-py/)
-[http://www.cnblogs.com/UnGeek/p/5922630.html](http://www.cnblogs.com/UnGeek/p/5922630.html)
+- [https://packaging.python.org/tutorials/packaging-projects/](https://packaging.python.org/tutorials/packaging-projects/)
+- [http://blog.konghy.cn/2018/04/29/setup-dot-py/](http://blog.konghy.cn/2018/04/29/setup-dot-py/)
+- [http://www.cnblogs.com/UnGeek/p/5922630.html](http://www.cnblogs.com/UnGeek/p/5922630.html)
 
 # 新书推荐
 ![Python Web自动化测试设计与实现](https://img-blog.csdnimg.cn/20190117100818307.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
