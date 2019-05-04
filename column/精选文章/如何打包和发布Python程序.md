@@ -132,7 +132,7 @@ twine upload dist/*
 pip install PyTestReport
 ```
 同样的，你也可以通过[https://pypi.org/manage/projects/](https://pypi.org/manage/projects/)来查看和管理已上传的项目。
-![PYPI Projects](https://github.com/five3/testqa/blob/master/images/pypi_001.png?raw=true)
+![PYPI Projects](https://github.com/five3/testqa/blob/master/images/pypi_002.png?raw=true)
 
 ## 附录
 - [https://packaging.python.org/tutorials/packaging-projects/](https://packaging.python.org/tutorials/packaging-projects/)
