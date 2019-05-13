@@ -1,4 +1,5 @@
 # PyTestReport单元测试报告框架
+[首发地址](http://www.testqa.cn/article/detail/230)
 
 > 如果你是Java栈的同学，那么你可能知道extent report测试报告框架。而Python你可能知道HTMLTestRunner测试报告框架。今天要介绍的则是基于HTMLTestRunner的新测试报告框架PyTestReport。
 
