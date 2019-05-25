@@ -72,3 +72,9 @@
 - 二是如何去识别被处理的请求的意图，即请求本身希望被测试模块处理还是被base模块处理
 
 关于这2点的技术实现，阿里、有赞都已经有了各自的实现方式，感兴趣的同学可以去他们的公众号上查阅相关文章；当然还可以有其它的实现方式，大家也可以自己思考下，欢迎来共同探讨该技术话题！
+
+# 新书推荐
+![Python Web自动化测试设计与实现](https://img-blog.csdnimg.cn/20190117100818307.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
+
+获取更多关于Python和自动化测试的文章，请扫描如下二维码！
+![关注二维码](https://img-blog.csdnimg.cn/20190117103222240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
