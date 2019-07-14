@@ -11,7 +11,8 @@
 ## Locust的执行流程
 首先，来看下Locust的执行命令如下：
 ```bash
-locust -f locustfile.py --host http://www.testqa.cn
+locust -f performan.py --host http://www.testqa.cn --no-web -c 10 -r 5 -t 50s
+# 执行performan.py进行性能测试，并发数为10，每秒启动5个并发，执行时间为50秒
 ```
 那么执行了这一条语句后，Locust究竟在后台做了哪些事情呢？请看下面的程序执行流程。
 ```text
@@ -156,7 +157,7 @@ class HttpLocust(Locust):
 def get_next_task(self):
     return random.choice(self.tasks)
 ```
-这个是随机获取任务的实现片段，首先在生成tasks列表的时候，会根据任务的locust_task_weight属性值来添加同等数量的任务；之后在获取任务的时候，直接使用随机函数从tasks列表中获取即可。因为权重越高在tasks列表中出现的次数就越多，所以被随机选到的概率就越高。
+这个是随机获取任务的实现片段，首先在生成tasks列表的时候，会根据任务的locust_task_weight属性值来添加同等数量的任务；之后在获取任务的时候，直接使用随机函数从tasks列表中获取即可。因为权重越高在tasks列表中出现的次数就越多，所以被随机选到的概率就越高。（随机权重轮询算法）
 
 ```python
 class TaskSequence(TaskSet):
@@ -190,7 +191,7 @@ class TaskSequence(TaskSet):
             # task is a function
             task(self, *args, **kwargs)
 ```
-> 需要注意的是：TaskSet中的子任务集是通过tasks成员变量来获取的，不同于VUser中使用task_set成员变量。
+> 需要注意的是：TaskSet中的任务集在实例初始化时都被组装到了tasks成员列表内，而tasks列表中即可能包含普通任务，也可能包含子任务集。
 
 ## 小结
 分析到这里其实会发现Locust的逻辑还是蛮清晰的，这些主要逻辑只包含在2个文件中。而通过源码分析也解答了我的一个疑惑，就是虽然各VUser之间是并发执行的，但是VUser内的请求确实顺序执行的。
