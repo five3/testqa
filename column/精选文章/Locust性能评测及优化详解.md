@@ -41,19 +41,67 @@
 #### Locust
 针对Locust先使用单实例进行压测，脚本中设置min_wait和max_wait均为0；由于Locust使用的是requests.session来发起请求，所以默认支持http的keep-alive；在单实例执行完成后，使用4实例来进行相同场景的压测。
 
-#### Jmeter
-首先调整Jmeter的JVM堆大小为固定2G，不设置思考时间，默认勾选keep-alive。分别使用不同的并发数进行场景压测，最终评测出最优并发用户数和最大QPS。
+具体的压测脚本如下：
+```python
+from locust import HttpLocust, TaskSet, task
 
-#### http_load
-由于http_load不支持keep-alive设置，所以只能用默认的几个参数进行压测。
+class WebsiteTasks(TaskSet):
+    @task
+    def index(self):
+        self.client.get("/")
+
+class WebsiteUser(HttpLocust):
+    task_set = WebsiteTasks
+    host = "http://10.0.0.1"
+    min_wait = 0
+    max_wait = 0
+```
+启动Locust的命令如下：
+```bash
+
+```
+
+不同并发和实例的压测结果如下：
+![]()
+
+#### Jmeter
+对于Jmeter工具，首先设置JVM堆大小为固定2G，不设置思考时间，默认勾选keep-alive。分别使用不同的并发数进行场景压测，最终评测出最优并发用户数和最大QPS。
+
+Jmeter的HTTP请求设置如下：
+![]()
+
+启动Jmeter的命令如下：
+```bash
+
+```
+
+不同并发数下的压测结果如下：
+![]()
+
 
 #### ab
-ab可以通过-k参数开启keep-alive模式，其它设置与http_load相同即可。
+ab是apache服务器中的一个压测工具，如果你不想安装整个apache，那么你可以直接安装httpd-tools即可。ab可以通过-k参数开启keep-alive模式，同时可以指定并发数和请求总数。
 
+ab的启动命令及参数如下：
+```bash
 
-### 压测结果
-这里只通过最简单的一个http请求，来测试各性能工具的加压能力体现。虽然有一定的说明性，但是不能代表全部，毕竟请求场景和请求内容不一致，也会影响工具本身的性能表现。比如：大文件或者内容的请求，对不同的工具性能的影响会很大。
+```
+ab不同并发数下的压测结果如下：
 ![]()
+
+#### http_load
+http_load工具需要下载后在本地编译，由于http_load不支持keep-alive设置，所以只能指定并发数和请求总数。具体的压测命令如下：
+```bash
+
+```
+http_load不同并发数下的压测结果如下：
+![]()
+
+
+### 压测说明
+由于压测场景比较单一，所以数据只能代表在该场景下，各工具在压测能力上的不同体现。如果换作另外的场景，可能工具之间的性能表现会有所变化。但总体来讲应该不会有太多的可变性。
+
+所以各工具的压测能力，基本上与其实现的语言执行效率成正比。C > JAVA > Python。另外，在使用keep-alive的情况下，确实会提高通信性能。
 
 ## 性能优化
 通过上面简单的对几个工具的评测，从这组数据的体现来讲，Locust是最弱的，Jmeter和网络上的评测结果接近。但是因为Locust属于Python系列，所以还是抱着希望来看看Locust是否还有优化的潜力。
