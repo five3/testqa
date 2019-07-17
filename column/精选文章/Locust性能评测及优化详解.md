@@ -152,3 +152,9 @@ locust -f performance.py --master
 ![]()
 
 > 注意：普通版本client和fast版本的对应go文件分别为`examples/http/client.go`和`examples/fasthttp/client.go`。
+
+获取更多关于Python和自动化测试的文章，请扫描如下二维码！
+![关注二维码](https://img-blog.csdnimg.cn/20190117103222240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
+
+# 新书推荐
+![Python Web自动化测试设计与实现](https://img-blog.csdnimg.cn/20190117100818307.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
