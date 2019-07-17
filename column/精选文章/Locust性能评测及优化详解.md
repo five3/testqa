@@ -122,11 +122,33 @@ http_load不同并发数下的压测结果如下：
 
 #### 测试Locust默认是否为keep-alive
 为了检测是否使用了keep-alive，可以通过wireshark来进行抓包，并查看不同请求是否复用了一个TCP连接；如果是则为keep-alive，否则就不是keep-alive模式。
+![]()
+
+从结果可以看出，requests.session确实默认是支持keep-alive的。所以如果使用locust的默认client，这块是不需要优化的了。
+
+#### 替换为urllib3实现client
 
 
-./http.out --url http://10.168.96.94/index/index.html
+#### 替换为socket实现client
 
 
+#### 替换为go实现client
+在查找Locust优化方案的时候，发现已经有人实现了go语言的client。github地址：[https://github.com/myzhan/boomer](https://github.com/myzhan/boomer)，安装步骤也很简单，按照项目说明即可很快完成。
 
+使用go语言的client也很方便，只要把原来启动slave的命令替换为启动go程序即可。具体命令如下：
+```bash
+locust -f performance.py --master
+./http.out --url http://10.168.xx.xx/index/index.html
+```
+不同并发数下的压测结果如下：
+![]()
 
+在boomer项目里，实现了2个版本的go客户端；除了上面的那个，还有一个fast版本的，启动命令如下：
+```bash
+locust -f performance.py --master
+./fasthttp.out --url http://10.168.xx.xx/index/index.html
+```
+不同并发数下的压测结果如下：
+![]()
 
+> 注意：普通版本client和fast版本的对应go文件分别为`examples/http/client.go`和`examples/fasthttp/client.go`。
