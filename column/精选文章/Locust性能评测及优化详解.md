@@ -29,6 +29,7 @@
 #### 3、压测工具准备
 - Locust
 - Jmeter
+- ab
 - http_load
 
 ####  压测开始
@@ -52,13 +53,18 @@ class WebsiteTasks(TaskSet):
 
 class WebsiteUser(HttpLocust):
     task_set = WebsiteTasks
-    host = "http://10.0.0.1"
+    host = "http://10.168.xx.xx"
     min_wait = 0
     max_wait = 0
 ```
 启动Locust的命令如下：
 ```bash
-
+# 单实例
+locust -f performance.py --no-web -c 2 -r 2 -t 5s
+# 分布式
+locust -f performance.py --master
+locust -f performance.py --slave
+# 访问http://127.0.0.1:8089 启动压测
 ```
 
 不同并发和实例的压测结果如下：
@@ -72,7 +78,7 @@ Jmeter的HTTP请求设置如下：
 
 启动Jmeter的命令如下：
 ```bash
-
+sh jmeter -n -t ../xxx.jmx -l /data/xxxx.jtl
 ```
 
 不同并发数下的压测结果如下：
@@ -84,7 +90,7 @@ ab是apache服务器中的一个压测工具，如果你不想安装整个apache
 
 ab的启动命令及参数如下：
 ```bash
-
+./ab -n 6000000 -c 150 http://10.168.xx.xx/index/index.html
 ```
 ab不同并发数下的压测结果如下：
 ![]()
@@ -92,7 +98,7 @@ ab不同并发数下的压测结果如下：
 #### http_load
 http_load工具需要下载后在本地编译，由于http_load不支持keep-alive设置，所以只能指定并发数和请求总数。具体的压测命令如下：
 ```bash
-
+./http_load -p 100 -f 6000000 http://10.168.xx.xx/index/index.html
 ```
 http_load不同并发数下的压测结果如下：
 ![]()
@@ -116,6 +122,9 @@ http_load不同并发数下的压测结果如下：
 
 #### 测试Locust默认是否为keep-alive
 为了检测是否使用了keep-alive，可以通过wireshark来进行抓包，并查看不同请求是否复用了一个TCP连接；如果是则为keep-alive，否则就不是keep-alive模式。
+
+
+./http.out --url http://10.168.96.94/index/index.html
 
 
 
