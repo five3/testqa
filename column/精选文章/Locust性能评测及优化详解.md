@@ -70,6 +70,8 @@ locust -f performance.py --slave
 不同并发和实例的压测结果如下：
 ![]()
 
+> 注：分布式场景下，停止client压测貌似有bug。
+
 #### Jmeter
 对于Jmeter工具，首先设置JVM堆大小为固定2G，不设置思考时间，默认勾选keep-alive。分别使用不同的并发数进行场景压测，最终评测出最优并发用户数和最大QPS。
 
