@@ -112,7 +112,11 @@ http_load不同并发数下的压测结果如下：
 ### 压测说明
 由于压测场景比较单一，所以数据只能代表在该场景下，各工具在压测能力上的不同体现。如果换作另外的场景，可能工具之间的性能表现会有所变化。但总体来讲应该不会有太多的可变性。
 
-所以各工具的压测能力，基本上与其实现的语言执行效率成正比。C > JAVA > Python。另外，在使用keep-alive的情况下，确实会提高通信性能。
+各工具的压测能力，基本上与其实现的语言执行效率成正比。C > JAVA > Python。另外，在使用keep-alive的情况下，确实会提高通信性能。
+
+判定压测工具最大并发能力，在确保手工测试时间与基准时间接近的情况下，依据QPS曲线来判定。如果压测的同时手工测试时间明显大于基准时间，则表示服务器先出现了性能问题。
+
+很多工具的响应时间统计显示为0，所以单纯从工具端获取响应时间是不准的。需要在压测同时人工访问并计时，结合服务器端的QPS、响应时间等综合来得出。
 
 ## 性能优化
 通过上面简单的对几个工具的评测，从这组数据的体现来讲，Locust是最弱的，Jmeter和网络上的评测结果接近。但是因为Locust属于Python系列，所以还是抱着希望来看看Locust是否还有优化的潜力。
@@ -134,7 +138,61 @@ http_load不同并发数下的压测结果如下：
 #### 替换为urllib3实现client
 因为requests底层使用的是urllib3库，所以这里我们也尝试直接使用urllib3作为locust的client，看在性能上是否有提升。client代码如下：
 ```python
+import time
+import urllib3
 
+from locust import Locust, events
+from locust.exception import LocustError
+# from requests import Response
+
+
+class Response:
+    def __init__(self, url):
+        self.url = url
+        self.reason = 'OK'
+        self.status_code = 200
+        self.data = None
+
+
+class FastHttpSession:
+    def __init__(self, base_url=None):
+        self.base_url = base_url
+        # self.http = urllib3.PoolManager()
+        self.http = urllib3.HTTPConnectionPool(base_url)
+
+    def get(self, path):
+        full_path = f'{self.base_url}{path}'
+        return self.url_request(full_path)
+
+    def url_request(self, url, name="hello world"):
+        rep = Response(url)
+        start_time = time.time()
+
+        try:
+            # r = self.http.request('GET', url)
+            r = self.http.urlopen('GET', url)
+            total_time = int((time.time() - start_time) * 1000)
+            events.request_success.fire(request_type="urllib3", name=name, response_time=total_time, response_length=0)
+        except Exception as e:
+            total_time = int((time.time() - start_time) * 1000)
+            events.request_failure.fire(request_type="urllib3", name=name, response_time=total_time, exception=e)
+
+        rep.status_code = r.status
+        rep.reason = r.reason
+        rep.data = r.data
+        return rep
+
+
+class FastHttpLocust(Locust):
+    client = None
+
+    def __init__(self):
+        super(FastHttpLocust, self).__init__()
+        if self.host is None:
+            raise LocustError(
+                "You must specify the base host. Either in the host attribute in the Locust class, or on the command line using the --host option.")
+
+        self.client = FastHttpSession(base_url=self.host)
 ```
 
 从urllib3请求时录制的TCP通信可以看出，它默认也是使用了keep-alive模式。
