@@ -68,15 +68,15 @@ locust -f performance.py --slave
 ```
 
 不同并发和实例的压测结果如下：
-![]()
+![locust](https://github.com/five3/testqa/blob/master/images/locust/locust-result.png?raw=true)
 
-> 注：分布式场景下，停止client压测貌似有bug。
+> 注：分布式场景下，locust停止默认client貌似有bug,web端停止不了。
 
 #### Jmeter
 对于Jmeter工具，首先设置JVM堆大小为固定2G，不设置思考时间，默认勾选keep-alive。分别使用不同的并发数进行场景压测，最终评测出最优并发用户数和最大QPS。
 
 Jmeter的HTTP请求设置如下：
-![]()
+![jmeter-config](https://github.com/five3/testqa/blob/master/images/locust/jmeter-config.png?raw=true)
 
 启动Jmeter的命令如下：
 ```bash
@@ -84,7 +84,7 @@ sh jmeter -n -t ../xxx.jmx -l /data/xxxx.jtl
 ```
 
 不同并发数下的压测结果如下：
-![]()
+![jmeter-result](https://github.com/five3/testqa/blob/master/images/locust/jmeter-result.png?raw=true)
 
 
 #### ab
@@ -95,7 +95,9 @@ ab的启动命令及参数如下：
 ./ab -n 6000000 -c 150 http://10.168.xx.xx/index/index.html
 ```
 ab不同并发数下的压测结果如下：
-![]()
+![ab-result](https://github.com/five3/testqa/blob/master/images/locust/ab-result.png?raw=true)
+
+> 为什么ab做了这么多次测试呢？因为本来没有想过能压到这么高的并发。另外会发现使用keep-alive性能会提升很高。
 
 #### http_load
 http_load工具需要下载后在本地编译，由于http_load不支持keep-alive设置，所以只能指定并发数和请求总数。具体的压测命令如下：
@@ -103,8 +105,9 @@ http_load工具需要下载后在本地编译，由于http_load不支持keep-ali
 ./http_load -p 100 -f 6000000 http://10.168.xx.xx/index/index.html
 ```
 http_load不同并发数下的压测结果如下：
-![]()
+![http_load-result](https://github.com/five3/testqa/blob/master/images/locust/http_load-result.png?raw=true)
 
+> 因为http_load不支持设置keep-alive，所以它的数据和ab不使用keep-alive时差不多。
 
 ### 压测说明
 由于压测场景比较单一，所以数据只能代表在该场景下，各工具在压测能力上的不同体现。如果换作另外的场景，可能工具之间的性能表现会有所变化。但总体来讲应该不会有太多的可变性。
@@ -124,15 +127,24 @@ http_load不同并发数下的压测结果如下：
 
 #### 测试Locust默认是否为keep-alive
 为了检测是否使用了keep-alive，可以通过wireshark来进行抓包，并查看不同请求是否复用了一个TCP连接；如果是则为keep-alive，否则就不是keep-alive模式。
-![]()
+![requests](https://github.com/five3/testqa/blob/master/images/locust/requestsclient.png?raw=true)
 
 从结果可以看出，requests.session确实默认是支持keep-alive的。所以如果使用locust的默认client，这块是不需要优化的了。
 
 #### 替换为urllib3实现client
+因为requests底层使用的是urllib3库，所以这里我们也尝试直接使用urllib3作为locust的client，看在性能上是否有提升。client代码如下：
+```python
 
+```
+
+从urllib3请求时录制的TCP通信可以看出，它默认也是使用了keep-alive模式。
+![urlib3client](https://github.com/five3/testqa/blob/master/images/locust/urlib3client.png?raw=true)
+
+具体压测执行结果如下：
+![urllib3client](https://github.com/five3/testqa/blob/master/images/locust/urllib3-result.png?raw=true)
 
 #### 替换为socket实现client
-
+本来准备继续使用socket来实现client，但是TCP协议编程这块有坑，没有达到理想的效果，这个坑先留着日后再填！
 
 #### 替换为go实现client
 在查找Locust优化方案的时候，发现已经有人实现了go语言的client。github地址：[https://github.com/myzhan/boomer](https://github.com/myzhan/boomer)，安装步骤也很简单，按照项目说明即可很快完成。
@@ -143,7 +155,7 @@ locust -f performance.py --master
 ./http.out --url http://10.168.xx.xx/index/index.html
 ```
 不同并发数下的压测结果如下：
-![]()
+![go-result](https://github.com/five3/testqa/blob/master/images/locust/go-result.png?raw=true)
 
 在boomer项目里，实现了2个版本的go客户端；除了上面的那个，还有一个fast版本的，启动命令如下：
 ```bash
@@ -151,12 +163,16 @@ locust -f performance.py --master
 ./fasthttp.out --url http://10.168.xx.xx/index/index.html
 ```
 不同并发数下的压测结果如下：
-![]()
+![fastgo-result](https://github.com/five3/testqa/blob/master/images/locust/fastgo-result.png?raw=true)
 
 > 注意：普通版本client和fast版本的对应go文件分别为`examples/http/client.go`和`examples/fasthttp/client.go`。
 
+# 总结
+从当前评测的结果来看，python实现的客户端在压力生成上并没有优势；而像ab这样的工具在场景支持上却不够丰富；如果希望2者兼得，那么go版本的locust客户端或许是个不错的选择！
+
+locust官方github上有一个issue，相关人员对于locust施压能力不足的解释是：“locust主要解决场景开发效率问题，而不是解决生成压力的问题，因为人效成本远大于硬件的成本”。
+
+如果你也在关注和学习性能，或者有觉得有出入的地方，那么欢迎一起来积极讨论，挖掘出即好用又高效的压测方案！
+
 获取更多关于Python和自动化测试的文章，请扫描如下二维码！
 ![关注二维码](https://img-blog.csdnimg.cn/20190117103222240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
-
-# 新书推荐
-![Python Web自动化测试设计与实现](https://img-blog.csdnimg.cn/20190117100818307.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
