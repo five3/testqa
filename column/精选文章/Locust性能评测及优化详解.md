@@ -145,14 +145,12 @@ from locust import Locust, events
 from locust.exception import LocustError
 # from requests import Response
 
-
 class Response:
     def __init__(self, url):
         self.url = url
         self.reason = 'OK'
         self.status_code = 200
         self.data = None
-
 
 class FastHttpSession:
     def __init__(self, base_url=None):
@@ -182,7 +180,6 @@ class FastHttpSession:
         rep.data = r.data
         return rep
 
-
 class FastHttpLocust(Locust):
     client = None
 
@@ -201,8 +198,10 @@ class FastHttpLocust(Locust):
 具体压测执行结果如下：
 ![urllib3client](https://github.com/five3/testqa/blob/master/images/locust/urllib3-result.png?raw=true)
 
+> 从压测结果可以看出，使用urllib3并发能力增加了将近一倍；不过相比较于其它语言的实现，还是有一定的差距。
+
 #### 替换为socket实现client
-本来准备继续使用socket来实现client，但是TCP协议编程这块有坑，没有达到理想的效果，这个坑先留着日后再填！
+> 本来准备继续使用socket来实现client，但是TCP协议编程这块有坑，没有达到理想的效果，这个坑先留着日后再填！
 
 #### 替换为go实现client
 在查找Locust优化方案的时候，发现已经有人实现了go语言的client。github地址：[https://github.com/myzhan/boomer](https://github.com/myzhan/boomer)，安装步骤也很简单，按照项目说明即可很快完成。
