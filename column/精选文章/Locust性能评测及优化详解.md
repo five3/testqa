@@ -232,4 +232,4 @@ locust官方github上有一个issue，相关人员对于locust施压能力不足
 如果你也在关注和学习性能，或者有觉得有出入的地方，那么欢迎一起来积极讨论，挖掘出即好用又高效的压测方案！
 
 获取更多关于Python和自动化测试的文章，请扫描如下二维码！
-![关注二维码](https://img-blog.csdnimg.cn/20190117103222240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpdmUz,size_16,color_FFFFFF,t_70)
+![关注二维码](https://img-blog.csdnimg.cn/2019072113294796.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
