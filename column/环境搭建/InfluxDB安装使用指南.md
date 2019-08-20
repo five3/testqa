@@ -14,21 +14,33 @@ InfluxDB是目前比较主流的时序数据库，而时序数据库则是以时
 ## 安装
 > 安装InfluxDB包需要root或是有管理员权限才可以。
 
-对于Ubuntu用户，可以用下面的命令添加InfluxDB的仓库
+### YUM安装
+对于Centos用户，可以用下面的命令添加InfluxDB的仓库
 ```bash
-curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
-source /etc/lsb-release
-echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+cat <<EOF | sudo tee /etc/yum.repos.d/influxdb.repo
+[influxdb]
+name = InfluxDB Repository - RHEL \$releasever
+baseurl = https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable
+enabled = 1
+gpgcheck = 1
+gpgkey = https://repos.influxdata.com/influxdb.key
+EOF
 ```
 然后安装、运行InfluxDB服务：
 ```bash
-sudo apt-get update && sudo apt-get install influxdb
+sudo yum install influxdb
 sudo service influxdb start
 ```
 如果你的系统可以使用Systemd(比如Ubuntu 15.04+, Debian 8+），也可以这样启动：
 ```bash
-sudo apt-get update && sudo apt-get install influxdb
+sudo yum install influxdb
 sudo systemctl start influxdb
+```
+
+### RPM安装
+```bash
+wget https://dl.influxdata.com/influxdb/releases/influxdb-1.7.7-1.x86_64.rpm
+rpm -ivh influxdb-1.7.7-1.x86_64.rpm
 ```
 
 ## 配置
@@ -109,16 +121,13 @@ time                                     host         region   value
 import requests
 """
 数据库查询相关的HTTP请求内容如下：
-curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE mydb"
+curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE curl"
 curl -i -XPOST http://localhost:8086/query --data-urlencode "q=SHOW DATABASES"
-curl -i -XPOST http://localhost:8086/query --data-urlencode "q=USE mydb"
 """
 
-r = requests.post("http://localhost:8086/query", data="q=CREATE DATABASE mydb")
+r = requests.post("http://localhost:8086/query", data={"q": "CREATE DATABASE python"})
 print(r.text)
-r = requests.post("http://localhost:8086/query", data="q=SHOW DATABASES")
-print(r.text)
-r = requests.post("http://localhost:8086/query", data="q=USE mydb")
+r = requests.post("http://localhost:8086/query", data={"q": "SHOW DATABASES"})
 print(r.text)
 ```
 
@@ -126,24 +135,27 @@ print(r.text)
 ```python
 import requests
 """
-curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary 'cpu_load_short,host=server01,region=us-west value=0.64 1434055562000000000'
+curl -i -XPOST 'http://localhost:8086/write?db=curl' --data-binary 'cpu_load_short,host=server01,region=us-west value=0.64 1434055562000000000'
 """
 
-r = requests.post("http://localhost:8086/write?db=mydb", data=b"cpu_load_short,host=server01,region=us-west value=0.64 1434055562000000000")
+r = requests.post("http://localhost:8086/write?db=python", data=b"cpu_load,host=server01,region=us-west value=0.64 1434055562000000000")
 print(r.text)
-
-r = requests.post("http://localhost:8086/write?db=mydb", file=open('points.txt', 'rb'))
-print(r.text)
+## 从文件读取内容写入
+with open('influxdata', 'rb') as f:
+    r = requests.post("http://localhost:8086/write?db=python",
+                      data=f.read().replace(b'\r', b''))
+    print(r.text)
 ```
+> 如果是批量写入的话，那么point数据必须只能以\n换行。所以上面有替换了\r为空的操作。
 
 ### 查询记录
 ```python
 import requests
 """
-curl -G 'http://localhost:8086/query?pretty=true' --data-urlencode "db=mydb" --data-urlencode "q=SELECT \"value\" FROM \"cpu_load_short\" WHERE \"region\"='us-west'"
+curl -G 'http://localhost:8086/query?pretty=true' --data-urlencode "db=curl" --data-urlencode "q=SELECT \"value\" FROM \"cpu_load_short\" WHERE \"region\"='us-west'"
 """
 
-data = {"db": "mydb", "q": "SELECT \"value\" FROM \"cpu_load_short\" WHERE \"region\"='us-west'"}
+data = {"db": "python", "q": "SELECT \"value\" FROM \"cpu_load\" WHERE \"region\"='us-west'"}
 r = requests.post("http://localhost:8086/query?pretty=true", data=data)
 print(r.text)
 ```
@@ -159,7 +171,7 @@ from influxdb import InfluxDBClient
 
 json_body = [
     {
-        "measurement": "cpu_load_short",
+        "measurement": "cpu_load",
         "tags": {
             "host": "server01",
             "region": "us-west"
@@ -171,10 +183,10 @@ json_body = [
     }
 ]
 
-client = InfluxDBClient('localhost', 8086, 'root', 'root', 'mydb')
-client.create_database('mydb')
+client = InfluxDBClient('localhost', 8086, 'root', 'root', 'influx')
+client.create_database('influx')
 client.write_points(json_body)
-result = client.query('select value from cpu_load_short;')
+result = client.query('select value from cpu_load;')
 print("Result: {0}".format(result))
 ```
 
