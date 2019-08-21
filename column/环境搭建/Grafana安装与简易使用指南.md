@@ -55,18 +55,19 @@ grafana-server -config /etc/grafana/grafana.ini -homepath /usr/share/grafana
 [Grafana v5.2.1版本汉化方法](https://blog.csdn.net/w958660278/article/details/80437978)
 
 ## 使用
-启动grafana-server之后，就可以通过3000端口来范围web页面了，比如：http://localhost:3000。默认的账户为admin：admin，首次登录时会要求修改密码。登录后的界面如下：
+启动grafana-server之后，就可以通过3000端口来访问web页面了，比如：[http://localhost:3000](http://localhost:3000)。 默认的账户为admin：admin，首次登录时会要求修改密码。登录后的界面如下：
 ![dashboard](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-001.png)
 
 ### 配置数据源
 登录之后，首先要做的事情就是添加数据源；前面我们也提到过`grafana`可以支持很多数据源，这里只选择`influxdb`作为数据源，其添加内容的界面如下：
 ![datasource](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-002.png)
+
 只需要选择好数据类型为`influxdb`，然后配置好相应的访问url和数据库即可。
 
 ### 配置dashboard
 接下来就是添加面板，也就是想要展示数据的图表；`influxdb`不仅支持普通曲线图，还是支持很多的可视化图；此外还支持使用第三方已经配置好的模板和插件，非常的好用。
 
-比如：对于jmeter性能数据就有专门的第三方模板，直接使用即可无需自己配置；还有像nginx、redis、mysql、mongo等专门的三方模板可以选用。
+比如：对于jmeter性能数据就有专门的第三方模板，直接使用即可无需自己配置；还有像nginx、redis、mysql、mongo等都有专门的三方模板可以选用。
 
 而如果你只想安静地展示自己独有的数据，那么你也可以选择自定义一个模板；grafana新建模板有2种方式可选，图示如下：
 ![create](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-003.png)
