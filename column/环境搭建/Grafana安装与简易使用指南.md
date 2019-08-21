@@ -56,14 +56,35 @@ grafana-server -config /etc/grafana/grafana.ini -homepath /usr/share/grafana
 
 ## 使用
 启动grafana-server之后，就可以通过3000端口来范围web页面了，比如：http://localhost:3000。默认的账户为admin：admin，首次登录时会要求修改密码。登录后的界面如下：
-![dashboard]()
+![dashboard](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-001.png)
 
 ### 配置数据源
-
+登录之后，首先要做的事情就是添加数据源；前面我们也提到过`grafana`可以支持很多数据源，这里只选择`influxdb`作为数据源，其添加内容的界面如下：
+![datasource](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-002.png)
+只需要选择好数据类型为`influxdb`，然后配置好相应的访问url和数据库即可。
 
 ### 配置dashboard
+接下来就是添加面板，也就是想要展示数据的图表；`influxdb`不仅支持普通曲线图，还是支持很多的可视化图；此外还支持使用第三方已经配置好的模板和插件，非常的好用。
 
+比如：对于jmeter性能数据就有专门的第三方模板，直接使用即可无需自己配置；还有像nginx、redis、mysql、mongo等专门的三方模板可以选用。
+
+而如果你只想安静地展示自己独有的数据，那么你也可以选择自定义一个模板；grafana新建模板有2种方式可选，图示如下：
+![create](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-003.png)
+
+- Add Query是添加一个普通的曲线图表来展示数据
+- Visualization是添加一个可视化的图表，就是那种比较炫酷的图形
+
+这2种方式的配置步骤和内容基本一样，只是对于图形展示的属性有所不同而已；而最重要的就是配置`influxdb`的数据读取语句。
+![query](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-004.png)
+这个样例里从cpu_load表中读取value字段的数值并计算平均值再展示。
 
 ### 查看数据
+配置好面板的基本数据之后，记得保存然后返回主面板页面，就能看到数据的展示情况了。如下图：
+![show](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-005.png)
+这里刚好配置了2种形式的图表，上面是普通的，下面则是可视化的；现在知道它们的区别了吧！
 
+# 总结
+`grafana`可以说是即强大又简单的数据展示工具，可以支持很多的数据源，提供了很多的图表格式，还有三方模板库可以直接使用；而对于简单需求的配置却是如此的简单。
 
+获取更多关于Python和测试开发相关的文章，请扫描如下二维码！
+![关注二维码](https://img-blog.csdnimg.cn/2019072113294796.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)

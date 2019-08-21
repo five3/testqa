@@ -74,6 +74,7 @@ influxd
 | field | field |
 | primary key | timestamp |
 
+
 ### database操作
 ```bash
 > influx -precision rfc3339
