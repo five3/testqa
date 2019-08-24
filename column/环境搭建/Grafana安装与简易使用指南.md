@@ -80,7 +80,25 @@ grafana-server -config /etc/grafana/grafana.ini -homepath /usr/share/grafana
 这个样例里从cpu_load表中读取value字段的数值并计算平均值再展示。
 
 ### 查看数据
-配置好面板的基本数据之后，记得保存然后返回主面板页面，就能看到数据的展示情况了。如下图：
+配置好面板的基本数据之后，记得保存然后返回主面板页面，默认显示为No Data，需要你插入一些真实数据，比如我插入的数据如下：
+```bash
+INSERT cpu_load,host=serverA,region=us_west value=0.14 1566618365111359200
+INSERT cpu_load,host=serverA,region=us_west value=0.24 1566619375111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.34 1566620385111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.53 1566621395111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.68 1566622405111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.78 1566623415111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.84 1566624425111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.94 1566625435111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.75 1566626445111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.63 1566627455111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.56 1566628465111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.73 1566629475111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.64 1566630485111135920
+INSERT cpu_load,host=serverA,region=us_west value=0.58 1566631495111135920
+```
+
+插入之后就能看到数据的展示情况了。如下图：
 ![show](https://raw.githubusercontent.com/five3/testqa/master/images/grafana/grafana-005.png)
 这里刚好配置了2种形式的图表，上面是普通的，下面则是可视化的；现在知道它们的区别了吧！
 
