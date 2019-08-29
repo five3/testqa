@@ -1,6 +1,6 @@
 # 基于host的http代理--hproxy
 
-![banner](https://github.com/five3/testqa/blob/master/images/weixin/banner.png?raw=true)
+![banner](https://img-blog.csdnimg.cn/20190829223407940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
 
 > 说到代理，大多数情况我们都会想到通过浏览器设置的正向代理，以及类似nginx的反向代理；而实际上除此之外还有一种基于host方式实现的代理。
 
@@ -9,7 +9,7 @@
 ## 与普通代理的区别
 所谓的普通代理，就是我们日常会用到的那种代理，通常需要客户端本身支持，使用时对客户端进行代理信息配置。最常见的就是对浏览器、curl等客户端配置代理，一般主要用来翻墙的！
 
-![001](https://github.com/five3/testqa/blob/master/images/http_proxy-001.png?raw=true)
+![001](https://img-blog.csdnimg.cn/20190829223426320.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
 
 而host代理则不是主流的代理方式，它的特点是通过设置host就能实现代理，而不需客户端本身支持，相对应用的访问更广一些。下面我们就来逐一对比下它们的具体区别：
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
 ```
 之后，就可以在浏览器访问`http://www.baidu.com`这个网址了，路径内容和参数随便输，它都会完整把你请求的信息给返回来，类似一个镜像服务。效果如下：
 
-![002](https://github.com/five3/testqa/blob/master/images/http_proxy-002.png?raw=true)
+![002](https://img-blog.csdnimg.cn/20190829223442740.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
 
 ### 代理请求
 目前来说，我们已经完成HTTP代理的一半功能了，剩下的就是如何去发送获取到的HTTP请求，之后在把请求响应内容组装好，再发回给浏览器或客户端。首先是组装要发送的请求，样例代码如下：
@@ -258,5 +258,5 @@ def after(context):
  
 
 获取更多关于Python和测试开发相关的文章，请扫描如下二维码！
-![关注二维码](https://github.com/five3/testqa/blob/master/images/weixin/book.jpg?raw=true)
+![关注二维码](https://img-blog.csdnimg.cn/20190829223353609.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
 
