@@ -1,4 +1,6 @@
-# 基于Flask的http代理
+# 基于host的http代理--hproxy
+
+![banner](https://github.com/five3/testqa/blob/master/images/weixin/banner.png?raw=true)
 
 > 说到代理，大多数情况我们都会想到通过浏览器设置的正向代理，以及类似nginx的反向代理；而实际上除此之外还有一种基于host方式实现的代理。
 
@@ -79,7 +81,7 @@ if __name__ == '__main__':
 # host文件添加一个映射
 10.0.0.1 www.baidu.com
 ```
-之后，就可以在浏览器访问`http://www.baidu.com`这个网址了，路径内容和参数随便输，它都会完整把你请求的信息给返回来。效果如下：
+之后，就可以在浏览器访问`http://www.baidu.com`这个网址了，路径内容和参数随便输，它都会完整把你请求的信息给返回来，类似一个镜像服务。效果如下：
 
 ![002](https://github.com/five3/testqa/blob/master/images/http_proxy-002.png?raw=true)
 
@@ -253,4 +255,8 @@ def after(context):
 - websocket支持
 - keep-alive支持
 - chunk支持
+ 
+
+获取更多关于Python和测试开发相关的文章，请扫描如下二维码！
+![关注二维码](https://github.com/five3/testqa/blob/master/images/weixin/book.jpg?raw=true)
 
