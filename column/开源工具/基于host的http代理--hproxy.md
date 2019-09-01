@@ -259,4 +259,3 @@ def after(context):
 
 获取更多关于Python和测试开发相关的文章，请扫描如下二维码！
 ![关注二维码](https://img-blog.csdnimg.cn/20190829223353609.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
-

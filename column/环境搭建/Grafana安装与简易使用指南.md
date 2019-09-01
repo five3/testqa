@@ -36,7 +36,7 @@ sudo /sbin/chkconfig --add grafana-server  ## service服务开机自启动
 ```
 如果你的系统可以使用Systemd，也可以这样启动：
 ```bash
-sudo yum install influxdb
+sudo yum install grafana-server
 sudo systemctl daemon-reload
 sudo systemctl start grafana-server
 sudo systemctl status grafana-server
