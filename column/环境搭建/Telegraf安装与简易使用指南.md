@@ -1,10 +1,11 @@
 # Telegraf安装与简易使用指南
 
 ![banner](https://img-blog.csdnimg.cn/20190829223407940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
-
+  
 前面我们依次介绍了Influxdb、Grafana的安装和基本使用，这次我们来看看Telegraf的安装与基本使用。Telegraf是InfluxData旗下的数据采集工具，主要用来采集各类服务的信息数据，比如：系统cpu、内存，redis、nginx等服务；跟Influxdb是兄弟产品。
 
 Telegraf、Influxdb、Grafana三者一起共同组成性能监控的三驾马车；数据采集、数据存储、数据展示。除此之外，我们还可以把性能压测数据也一并用这套系统管理起来，完整的性能监控平台的数据结构是这样的。
+
 ![](https://github.com/five3/testqa/blob/master/images/telegraf/telegraf-001.png?raw=true)
 
 今天我们还是主要介绍Telegraf的相关基本信息，它除了可以监控windows和linux的系统资源，常用服务之外，还可以通过插件扩展来定制自己想要的采集行为，可以说是即强大又灵活。
@@ -43,6 +44,7 @@ telegraf -config /etc/telegraf/telegraf.conf  # 手动启动
 主要是配置一个influxdb的地址和数据库，让telegraf知道把数据存放到哪里。当telegraf服务启动之后，我们就可以去influxdb查看相应数据是否提交成功，成功后再通过Grafana来配置数据展示。
 
 默认telegraf会采集cpu、内存、磁盘的数据信息，这里是采集的数据样例通过Grafana配置之后的展示效果如下：
+
 ![](https://github.com/five3/testqa/blob/master/images/telegraf/telegraf-002.png?raw=true)
 
 采集的数据内容非常的多，这里只配置了几个指标值而已。
@@ -76,6 +78,7 @@ location /nginx-status {
 }
 ```
 执行`nginx -s reload`命令使修改配置生效，再通过`curl http://127.0.0.1/nginx-status`命令来查看是否能正常获取信息。
+
 ![](https://github.com/five3/testqa/blob/master/images/telegraf/telegraf-003.png?raw=true)
 
 > active connections – 活跃的连接数量
@@ -115,6 +118,7 @@ telegraf  -config /etc/telegraf/telegraf.d/nginx.conf -input-filter nginx -test
 > nginx,host=861a6da23d20,port=80,server=localhost accepts=5i,active=1i,handled=5i,reading=0i,requests=5i,waiting=0i,writing=1i 1567346678000000000
 ```
 最后，我们还需要重启下`telegraf`服务，让新增的插件配置生效。最后查看nginx监控数据的效果如下：
+
 ![](https://github.com/five3/testqa/blob/master/images/telegraf/telegraf-004.png?raw=true)
 
 # 总结
