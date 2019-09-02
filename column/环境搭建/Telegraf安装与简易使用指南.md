@@ -1,6 +1,6 @@
 # Telegraf安装与简易使用指南
 
-![banner](https://img-blog.csdnimg.cn/20190829223407940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
+![banner](https://github.com/five3/testqa/blob/master/images/banner.png?raw=true)
   
 前面我们依次介绍了Influxdb、Grafana的安装和基本使用，这次我们来看看Telegraf的安装与基本使用。Telegraf是InfluxData旗下的数据采集工具，主要用来采集各类服务的信息数据，比如：系统cpu、内存，redis、nginx等服务；跟Influxdb是兄弟产品。
 
