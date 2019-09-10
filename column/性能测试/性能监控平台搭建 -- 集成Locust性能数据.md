@@ -2,7 +2,7 @@
 
 > 之前的几篇关于性能监控平台搭建的文章，分别介绍了性能测试中的资源数据采集、存储及展示。今天一起来看下如何完成Locust性能数据的采集。
 
-![](https://github.com/five3/testqa/blob/master/images/telegraf/telegraf-001.png?raw=true)
+![arh](https://github.com/five3/testqa/blob/master/images/telegraf/telegraf-001.png?raw=true)
 这是之前介绍过的性能监控平台的整体架构图，想要了解其它部分的搭建，可以查看相关文章《Telegraf安装与简易使用指南》、《InfluxDB安装与简易使用指南》、《Grafana安装与简易使用指南》
 
 因为我们已经完成了资源数据的采集，以及监控数据的存储与展示，剩下的就是采集性能数据了。规划中我们需要支持采集JMeter和Locust工具的性能数据，今天先讲解如何采集Locust的性能数据。
