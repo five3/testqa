@@ -54,5 +54,7 @@ http://npm.taobao.org/mirrors/chromedriver/
 | v2.4 | 29-32 |
 
 > 原表格由"软测小生"整理
+google官网：https://sites.google.com/a/chromium.org/chromedriver/downloads
+源站下载：http://chromedriver.storage.googleapis.com/index.html
 
 查看完整的对应关系，请关注公众号 TestQA 回复ChromeDriver即可。
