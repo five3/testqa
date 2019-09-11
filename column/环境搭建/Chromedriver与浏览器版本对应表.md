@@ -1,4 +1,4 @@
-![banner](https://github.com/five3/testqa/blob/master/images/banner.png?raw=true)
+![banner](https://img-blog.csdnimg.cn/20190911124709554.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9maXZlMy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70)
 
 # 国内镜像下载地址
 http://npm.taobao.org/mirrors/chromedriver/
